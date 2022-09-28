@@ -1,0 +1,1 @@
+sp_token_validity_duration = "${24 * 365 * 2}h"
