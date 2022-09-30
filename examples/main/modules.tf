@@ -9,6 +9,10 @@ data "azuread_group" "readers" {
   display_name = "Claranet Readers"
 }
 
+data "azuread_users" "owner_users" {
+  user_principal_names = ["jean.dupont@xxxx.clara.net", "owner.yyyy@contoso.com"]
+}
+
 resource "azurerm_role_definition" "example" {
   name  = "my-custom-role-definition"
   scope = data.azurerm_subscription.primary.id
@@ -28,6 +32,7 @@ module "sp" {
   version = "x.x.x"
 
   sp_display_name = "claranet-tools"
+  sp_owners       = data.azuread_users.owner_users.object_ids
 
   sp_scope_assignment = [
     {
@@ -43,5 +48,9 @@ module "sp" {
 
   sp_group_member = {
     (data.azuread_group.readers.display_name) = data.azuread_group.readers.object_id
+  }
+
+  sp_aad_app_tags = {
+    foo = "bar"
   }
 }

@@ -1,3 +1,15 @@
+variable "sp_aad_app_tags" {
+  description = "A set of tags to apply to the application. Tag values also propagate to any linked service principals."
+  type        = list(string)
+  default     = []
+}
+
+variable "sp_owners" {
+  description = "A set of object IDs of principals that will be granted ownership of both the AAD Application and associated Service Principal. Supported object types are users or service principals."
+  type        = list(string)
+  default     = []
+}
+
 variable "sp_token_validity_duration" {
   description = "Azure Service Principal token/password duration before it expires. Defaults to 2 years. Notation documentation: https://pkg.go.dev/time#ParseDuration"
   type        = string
