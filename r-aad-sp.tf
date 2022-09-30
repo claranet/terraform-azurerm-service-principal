@@ -1,5 +1,5 @@
 resource "azuread_application" "aad_app" {
-  display_name = local.sp_name
+  display_name = var.sp_display_name
 }
 
 resource "azuread_service_principal" "sp" {

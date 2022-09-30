@@ -35,9 +35,8 @@ data "azuread_group" "readers" {
 }
 
 resource "azurerm_role_definition" "example" {
-  role_definition_id = "00000000-0000-0000-0000-000000000000"
-  name               = "my-custom-role-definition"
-  scope              = data.azurerm_subscription.primary.id
+  name  = "my-custom-role-definition"
+  scope = data.azurerm_subscription.primary.id
 
   permissions {
     actions     = ["Microsoft.Resources/subscriptions/resourceGroups/read"]
@@ -52,6 +51,8 @@ resource "azurerm_role_definition" "example" {
 module "sp" {
   source  = "claranet/service-principal/azurerm"
   version = "x.x.x"
+
+  sp_display_name = "claranet-tools"
 
   sp_scope_assignment = [
     {
@@ -96,7 +97,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| custom\_sp\_name | Custom Azure Service Principal (and AAD application) name. | `string` | `""` | no |
+| sp\_display\_name | Azure Service Principal (and AAD application) display name. | `string` | n/a | yes |
 | sp\_group\_member | Map of AAD Groups (group name => object ID) to add this Service Principal. | `map(string)` | `{}` | no |
 | sp\_scope\_assignment | List of object representing the scopes and roles to assign the Service Principal with. | <pre>list(object({<br>    scope     = string<br>    role_name = string<br>    role_id   = optional(string)<br><br>    delegated_managed_identity_resource_id = optional(string)<br>    skip_service_principal_aad_check       = optional(bool, false)<br>  }))</pre> | `[]` | no |
 | sp\_token\_validity\_duration | Azure Service Principal token/password duration before it expires. Defaults to 2 years. Notation documentation: https://pkg.go.dev/time#ParseDuration | `string` | `"17520h"` | no |

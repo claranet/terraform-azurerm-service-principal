@@ -10,9 +10,8 @@ data "azuread_group" "readers" {
 }
 
 resource "azurerm_role_definition" "example" {
-  role_definition_id = "00000000-0000-0000-0000-000000000000"
-  name               = "my-custom-role-definition"
-  scope              = data.azurerm_subscription.primary.id
+  name  = "my-custom-role-definition"
+  scope = data.azurerm_subscription.primary.id
 
   permissions {
     actions     = ["Microsoft.Resources/subscriptions/resourceGroups/read"]
@@ -27,6 +26,8 @@ resource "azurerm_role_definition" "example" {
 module "sp" {
   source  = "claranet/service-principal/azurerm"
   version = "x.x.x"
+
+  sp_display_name = "claranet-tools"
 
   sp_scope_assignment = [
     {
