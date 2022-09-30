@@ -8,7 +8,7 @@ variable "sp_scope_assignment" {
   description = "List of object representing the scopes and roles to assign the Service Principal with."
   type = list(object({
     scope     = string
-    role_name = string
+    role_name = optional(string, "Reader")
     role_id   = optional(string)
 
     delegated_managed_identity_resource_id = optional(string)
