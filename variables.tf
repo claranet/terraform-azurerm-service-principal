@@ -17,7 +17,7 @@ variable "sp_scope_assignment" {
   default = []
 }
 
-variable "sp_group_member" {
+variable "sp_groups_member" {
   description = "Map of AAD Groups (group name => object ID) to add this Service Principal."
   type        = map(string)
   default     = {}

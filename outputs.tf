@@ -29,7 +29,7 @@ output "sp_role_scope_assignment" {
   value       = { for r in var.sp_scope_assignment : r.scope => coalesce(r.role_id, r.role_name) }
 }
 
-output "sp_aad_group" {
+output "sp_aad_groups" {
   description = "Azure Service Principal AAD groups membership."
-  value       = var.sp_group_member
+  value       = var.sp_groups_member
 }
