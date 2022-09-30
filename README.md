@@ -71,13 +71,11 @@ module "sp" {
     }
   ]
 
-  sp_group_member = {
+  sp_groups_member = {
     (data.azuread_group.readers.display_name) = data.azuread_group.readers.object_id
   }
 
-  sp_aad_app_tags = {
-    foo = "bar"
-  }
+  sp_aad_app_tags = ["foo", "bar"]
 }
 ```
 
