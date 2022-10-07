@@ -28,7 +28,7 @@ variable "sp_scope_assignment" {
   }))
   default = []
   validation {
-    condition     = !contains([for s in var.sp_scope_assignment : s.role_name != null || s.role_id != null], false)
+    condition     = alltrue([for s in var.sp_scope_assignment : s.role_name != null || s.role_id != null])
     error_message = "`role_name` or `role_id` attribute must be set."
   }
 }
