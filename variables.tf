@@ -20,13 +20,17 @@ variable "sp_scope_assignment" {
   description = "List of object representing the scopes and roles to assign the Service Principal with."
   type = list(object({
     scope     = string
-    role_name = optional(string, "Reader")
+    role_name = optional(string)
     role_id   = optional(string)
 
     delegated_managed_identity_resource_id = optional(string)
     skip_service_principal_aad_check       = optional(bool, false)
   }))
   default = []
+  validation {
+    condition     = !contains([for s in var.sp_scope_assignment : s.role_name != null || s.role_id != null], false)
+    error_message = "`role_name` or `role_id` attribute must be set."
+  }
 }
 
 variable "sp_groups_member" {

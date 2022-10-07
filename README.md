@@ -108,7 +108,7 @@ No modules.
 | sp\_display\_name | Azure Service Principal (and AAD application) display name. | `string` | n/a | yes |
 | sp\_groups\_member | Map of AAD Groups (group name => object ID) to add this Service Principal. | `map(string)` | `{}` | no |
 | sp\_owners | A set of object IDs of principals that will be granted ownership of both the AAD Application and associated Service Principal. Supported object types are users or service principals. | `list(string)` | `[]` | no |
-| sp\_scope\_assignment | List of object representing the scopes and roles to assign the Service Principal with. | <pre>list(object({<br>    scope     = string<br>    role_name = optional(string, "Reader")<br>    role_id   = optional(string)<br><br>    delegated_managed_identity_resource_id = optional(string)<br>    skip_service_principal_aad_check       = optional(bool, false)<br>  }))</pre> | `[]` | no |
+| sp\_scope\_assignment | List of object representing the scopes and roles to assign the Service Principal with. | <pre>list(object({<br>    scope     = string<br>    role_name = optional(string)<br>    role_id   = optional(string)<br><br>    delegated_managed_identity_resource_id = optional(string)<br>    skip_service_principal_aad_check       = optional(bool, false)<br>  }))</pre> | `[]` | no |
 | sp\_token\_validity\_duration | Azure Service Principal token/password duration before it expires. Defaults to 2 years. Notation documentation: https://pkg.go.dev/time#ParseDuration | `string` | `"17520h"` | no |
 
 ## Outputs
