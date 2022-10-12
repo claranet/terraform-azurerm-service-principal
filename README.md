@@ -123,6 +123,3 @@ No modules.
 | sp\_secret\_key | Azure Service Principal secret key/password. |
 | sp\_validity\_end\_date | Azure Service Principal validity date. |
 <!-- END_TF_DOCS -->
-## Related documentation
-
-Azure Lock management documentation: [docs.microsoft.com/en-us/azure/azure-resource-manager/management/lock-resources](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/lock-resources?tabs=json)
