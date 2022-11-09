@@ -1,5 +1,5 @@
 resource "azurerm_role_assignment" "sp_role" {
-  for_each = toset(var.sp_scope_assignment)
+  for_each = { for scope_assignment in toset(var.sp_scope_assignment) : format("%s-%s", scope_assignment.scope, scope_assignment.role_id == null ? scope_assignment.role_name : scope_assignment.role_id) => scope_assignment }
 
   scope                = each.value.scope
   role_definition_name = each.value.role_id == null ? each.value.role_name : null
