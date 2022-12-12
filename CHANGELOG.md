@@ -1,4 +1,4 @@
-# Unreleased
+# v7.0.2 - 2022-12-12
 
 Fixed
   * AZ-941: Fix SP role output
