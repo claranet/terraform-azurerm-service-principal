@@ -26,7 +26,7 @@ output "sp_validity_end_date" {
 
 output "sp_role_scope_assignment" {
   description = "Azure Service Principal assigned roles and scopes."
-  value       = { for r in var.sp_scope_assignment : r.scope => coalesce(r.role_id, r.role_name) }
+  value       = { for r in var.sp_scope_assignment : format("%s-%s", r.scope, coalesce(r.role_id, r.role_name)) => r }
 }
 
 output "sp_aad_groups" {
