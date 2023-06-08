@@ -38,3 +38,14 @@ variable "sp_groups_member" {
   type        = map(string)
   default     = {}
 }
+
+variable "sp_required_resource_access" {
+  description = "List of Service Principal Application OAuth permission scopes configuration. https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application#resource_access"
+  type = list(object({
+    resource_app_id      = string
+    resource_access_id   = string
+    resource_access_type = string
+  }))
+
+  default = []
+}

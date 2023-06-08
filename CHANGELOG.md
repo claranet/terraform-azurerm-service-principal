@@ -1,3 +1,8 @@
+# Unreleased
+
+Added
+  * AZ-1095: Add `required_resource_access` option for OAuth configuration
+
 # v7.0.2 - 2022-12-12
 
 Fixed

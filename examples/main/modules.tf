@@ -51,4 +51,17 @@ module "sp" {
   }
 
   sp_aad_app_tags = ["foo", "bar"]
+
+  sp_required_resource_access = [
+    {
+      resource_app_id      = "4f6778d8-5aef-43dc-a1ff-b073724b9495" # Azure Healthcare APIs
+      resource_access_id   = "db75143a-8f20-4238-9450-8b73ef4992f4" # user_impersonation - Delegated
+      resource_access_type = "Scope"
+    },
+    {
+      resource_app_id      = "00000003-0000-0000-c000-000000000000" # Microsoft.Graph
+      resource_access_id   = "e1fe6dd8-ba31-4d61-89e7-88639da4683d" # User.Read - Delegated
+      resource_access_type = "Scope"
+    }
+  ]
 }
