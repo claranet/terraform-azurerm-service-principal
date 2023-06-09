@@ -47,5 +47,6 @@ variable "sp_required_resource_access" {
     resource_access_type = string
   }))
 
-  default = []
+  default  = []
+  nullable = false
 }
