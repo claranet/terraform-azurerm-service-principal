@@ -16,6 +16,12 @@ variable "sp_token_validity_duration" {
   default     = "${24 * 365 * 2}h" # 2 years
 }
 
+variable "identifier_uris" {
+  description = "A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant."
+  type        = list(string)
+  default     = []
+}
+
 variable "sp_scope_assignment" {
   description = "List of object representing the scopes and roles to assign the Service Principal with."
   type = list(object({
@@ -49,4 +55,36 @@ variable "sp_required_resource_access" {
 
   default  = []
   nullable = false
+}
+
+variable "api_settings" {
+  description = "Settings for the APIs you need to define using this Service Principal."
+  type = object({
+    known_client_applications      = optional(list(string), [])
+    mapped_claims_enabled          = optional(bool, false)
+    requested_access_token_version = optional(number, 1)
+    oauth2_permission_scope = optional(list(object({
+      admin_consent_description  = string
+      admin_consent_display_name = string
+      enabled                    = optional(bool, true)
+      id                         = optional(string)
+      type                       = optional(string, "User")
+      user_consent_description   = optional(string)
+      user_consent_display_name  = optional(string)
+      value                      = optional(string)
+    })))
+  })
+  default = {}
+}
+
+variable "web_settings" {
+  description = "Configuration for web related settings for this Service Principal."
+  type = object({
+    homepage_url                  = optional(string, null)
+    logout_url                    = optional(string, null)
+    redirect_uris                 = optional(list(string), [])
+    access_token_issuance_enabled = optional(bool)
+    id_token_issuance_enabled     = optional(bool)
+  })
+  default = {}
 }

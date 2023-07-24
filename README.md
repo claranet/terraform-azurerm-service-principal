@@ -124,6 +124,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| api\_settings | Settings for the APIs you need to define using this Service Principal. | <pre>object({<br>    known_client_applications      = optional(list(string), [])<br>    mapped_claims_enabled          = optional(bool, false)<br>    requested_access_token_version = optional(number, 1)<br>    oauth2_permission_scope = optional(list(object({<br>      admin_consent_description  = string<br>      admin_consent_display_name = string<br>      enabled                    = optional(bool, true)<br>      id                         = optional(string)<br>      type                       = optional(string, "User")<br>      user_consent_description   = optional(string)<br>      user_consent_display_name  = optional(string)<br>      value                      = optional(string)<br>    })))<br>  })</pre> | `{}` | no |
+| identifier\_uris | A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant. | `list(string)` | `[]` | no |
 | sp\_aad\_app\_tags | A set of tags to apply to the application. Tag values also propagate to any linked service principals. | `list(string)` | `[]` | no |
 | sp\_display\_name | Azure Service Principal (and AAD application) display name. | `string` | n/a | yes |
 | sp\_groups\_member | Map of AAD Groups (group name => object ID) to add this Service Principal. | `map(string)` | `{}` | no |
@@ -131,6 +133,7 @@ No modules.
 | sp\_required\_resource\_access | List of Service Principal Application OAuth permission scopes configuration. https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application#resource_access | <pre>list(object({<br>    resource_app_id      = string<br>    resource_access_id   = string<br>    resource_access_type = string<br>  }))</pre> | `[]` | no |
 | sp\_scope\_assignment | List of object representing the scopes and roles to assign the Service Principal with. | <pre>list(object({<br>    scope     = string<br>    role_name = optional(string)<br>    role_id   = optional(string)<br><br>    delegated_managed_identity_resource_id = optional(string)<br>    skip_service_principal_aad_check       = optional(bool, false)<br>  }))</pre> | `[]` | no |
 | sp\_token\_validity\_duration | Azure Service Principal token/password duration before it expires. Defaults to 2 years. Notation documentation: https://pkg.go.dev/time#ParseDuration | `string` | `"17520h"` | no |
+| web\_settings | Configuration for web related settings for this Service Principal. | <pre>object({<br>    homepage_url                  = optional(string, null)<br>    logout_url                    = optional(string, null)<br>    redirect_uris                 = optional(list(string), [])<br>    access_token_issuance_enabled = optional(bool)<br>    id_token_issuance_enabled     = optional(bool)<br>  })</pre> | `{}` | no |
 
 ## Outputs
 
