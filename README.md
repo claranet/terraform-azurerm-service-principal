@@ -105,6 +105,7 @@ module "sp" {
 |------|---------|
 | azuread | ~> 2.0 |
 | azurerm | ~> 3.0 |
+| random | ~> 3.5.1 |
 
 ## Modules
 
@@ -119,6 +120,7 @@ No modules.
 | [azuread_service_principal.sp](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) | resource |
 | [azuread_service_principal_password.sp_pwd](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_password) | resource |
 | [azurerm_role_assignment.sp_role](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [random_uuid.api_settings](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 
 ## Inputs
 

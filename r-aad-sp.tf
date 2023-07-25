@@ -29,7 +29,7 @@ resource "azuread_application" "aad_app" {
           admin_consent_description  = oauth2_permission_scope.value.admin_consent_description
           admin_consent_display_name = oauth2_permission_scope.value.admin_consent_display_name
           enabled                    = oauth2_permission_scope.value.enabled
-          id                         = oauth2_permission_scope.value.id
+          id                         = coalesce(oauth2_permission_scope.value.id, random_uuid.api_settings[oauth2_permission_scope.value.admin_consent_display_name].result)
           type                       = oauth2_permission_scope.value.type
           user_consent_description   = oauth2_permission_scope.value.user_consent_description
           user_consent_display_name  = oauth2_permission_scope.value.user_consent_display_name
@@ -60,4 +60,8 @@ resource "azuread_service_principal" "sp" {
 resource "azuread_service_principal_password" "sp_pwd" {
   service_principal_id = azuread_service_principal.sp.id
   end_date_relative    = var.sp_token_validity_duration
+}
+
+resource "random_uuid" "api_settings" {
+  for_each = var.api_settings != {} ? toset([for api in var.api_settings.oauth2_permission_scope : api.admin_consent_display_name]) : []
 }
