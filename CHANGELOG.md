@@ -1,4 +1,4 @@
-# Unreleased
+# v7.2.0 - 2023-08-18
 
 Added
   * AZ-1124: Add API and web settings
