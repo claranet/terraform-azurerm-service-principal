@@ -18,13 +18,13 @@ resource "azuread_application" "aad_app" {
   }
 
   dynamic "api" {
-    for_each = [var.api_settings]
+    for_each = var.api_settings[*]
     content {
       known_client_applications      = api.value.known_client_applications
       mapped_claims_enabled          = api.value.mapped_claims_enabled
       requested_access_token_version = api.value.requested_access_token_version
       dynamic "oauth2_permission_scope" {
-        for_each = api.value.oauth2_permission_scope
+        for_each = api.value.oauth2_permission_scopes
         content {
           admin_consent_description  = oauth2_permission_scope.value.admin_consent_description
           admin_consent_display_name = oauth2_permission_scope.value.admin_consent_display_name
@@ -39,13 +39,16 @@ resource "azuread_application" "aad_app" {
     }
   }
 
-  web {
-    homepage_url  = var.web_settings.homepage_url
-    logout_url    = var.web_settings.logout_url
-    redirect_uris = var.web_settings.redirect_uris
-    implicit_grant {
-      access_token_issuance_enabled = var.web_settings.access_token_issuance_enabled
-      id_token_issuance_enabled     = var.web_settings.id_token_issuance_enabled
+  dynamic "web" {
+    for_each = var.web_settings[*]
+    content {
+      homepage_url  = web.homepage_url
+      logout_url    = web.logout_url
+      redirect_uris = web.redirect_uris
+      implicit_grant {
+        access_token_issuance_enabled = web.access_token_issuance_enabled
+        id_token_issuance_enabled     = web.id_token_issuance_enabled
+      }
     }
   }
 }
@@ -63,5 +66,5 @@ resource "azuread_service_principal_password" "sp_pwd" {
 }
 
 resource "random_uuid" "api_settings" {
-  for_each = var.api_settings != {} ? toset([for api in var.api_settings.oauth2_permission_scope : api.admin_consent_display_name]) : []
+  for_each = toset(try([for api in var.api_settings.oauth2_permission_scope : api.admin_consent_display_name], []))
 }

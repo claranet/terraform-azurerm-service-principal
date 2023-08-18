@@ -105,7 +105,7 @@ module "sp" {
 |------|---------|
 | azuread | ~> 2.0 |
 | azurerm | ~> 3.0 |
-| random | ~> 3.5.1 |
+| random | ~> 3.5 |
 
 ## Modules
 
@@ -126,7 +126,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| api\_settings | Settings for the APIs you need to define using this Service Principal. | <pre>object({<br>    known_client_applications      = optional(list(string), [])<br>    mapped_claims_enabled          = optional(bool, false)<br>    requested_access_token_version = optional(number, 1)<br>    oauth2_permission_scope = optional(list(object({<br>      admin_consent_description  = string<br>      admin_consent_display_name = string<br>      enabled                    = optional(bool, true)<br>      id                         = optional(string)<br>      type                       = optional(string, "User")<br>      user_consent_description   = optional(string)<br>      user_consent_display_name  = optional(string)<br>      value                      = optional(string)<br>    })))<br>  })</pre> | `{}` | no |
+| api\_settings | Settings for the APIs you need to define using this Service Principal. | <pre>object({<br>    known_client_applications      = optional(list(string), [])<br>    mapped_claims_enabled          = optional(bool, false)<br>    requested_access_token_version = optional(number, 1)<br>    oauth2_permission_scopes = optional(list(object({<br>      admin_consent_description  = string<br>      admin_consent_display_name = string<br>      enabled                    = optional(bool, true)<br>      id                         = optional(string)<br>      type                       = optional(string, "User")<br>      user_consent_description   = optional(string)<br>      user_consent_display_name  = optional(string)<br>      value                      = optional(string)<br>    })), [])<br>  })</pre> | `{}` | no |
 | identifier\_uris | A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant. | `list(string)` | `[]` | no |
 | sp\_aad\_app\_tags | A set of tags to apply to the application. Tag values also propagate to any linked service principals. | `list(string)` | `[]` | no |
 | sp\_display\_name | Azure Service Principal (and AAD application) display name. | `string` | n/a | yes |

@@ -63,7 +63,7 @@ variable "api_settings" {
     known_client_applications      = optional(list(string), [])
     mapped_claims_enabled          = optional(bool, false)
     requested_access_token_version = optional(number, 1)
-    oauth2_permission_scope = optional(list(object({
+    oauth2_permission_scopes = optional(list(object({
       admin_consent_description  = string
       admin_consent_display_name = string
       enabled                    = optional(bool, true)
@@ -72,9 +72,10 @@ variable "api_settings" {
       user_consent_description   = optional(string)
       user_consent_display_name  = optional(string)
       value                      = optional(string)
-    })))
+    })), [])
   })
-  default = {}
+  default  = {}
+  nullable = false
 }
 
 variable "web_settings" {
@@ -86,5 +87,6 @@ variable "web_settings" {
     access_token_issuance_enabled = optional(bool)
     id_token_issuance_enabled     = optional(bool)
   })
-  default = {}
+  default  = {}
+  nullable = false
 }
