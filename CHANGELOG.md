@@ -1,4 +1,4 @@
-# Unreleased
+# v7.2.1 - 2023-08-18
 
 Fixed
   * AZ-1124: Fixes
