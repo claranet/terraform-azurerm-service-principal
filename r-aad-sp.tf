@@ -42,12 +42,12 @@ resource "azuread_application" "aad_app" {
   dynamic "web" {
     for_each = var.web_settings[*]
     content {
-      homepage_url  = web.homepage_url
-      logout_url    = web.logout_url
-      redirect_uris = web.redirect_uris
+      homepage_url  = web.value.homepage_url
+      logout_url    = web.value.logout_url
+      redirect_uris = web.value.redirect_uris
       implicit_grant {
-        access_token_issuance_enabled = web.access_token_issuance_enabled
-        id_token_issuance_enabled     = web.id_token_issuance_enabled
+        access_token_issuance_enabled = web.value.access_token_issuance_enabled
+        id_token_issuance_enabled     = web.value.id_token_issuance_enabled
       }
     }
   }
@@ -66,5 +66,5 @@ resource "azuread_service_principal_password" "sp_pwd" {
 }
 
 resource "random_uuid" "api_settings" {
-  for_each = toset(try([for api in var.api_settings.oauth2_permission_scope : api.admin_consent_display_name], []))
+  for_each = toset(try([for api in var.api_settings.oauth2_permission_scopes : api.admin_consent_display_name], []))
 }
