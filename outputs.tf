@@ -5,7 +5,7 @@ output "sp_name" {
 
 output "sp_app_id" {
   description = "Azure Service Principal App ID."
-  value       = azuread_application.aad_app.application_id
+  value       = azuread_application.aad_app.client_id
 }
 
 output "sp_object_id" {
