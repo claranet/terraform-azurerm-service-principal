@@ -1,3 +1,8 @@
+# Unreleased
+
+Changed
+  * [GH-1](https://github.com/claranet/terraform-azurerm-service-principal/pull/1): `azuread_application` attribute `application_id` has been deprecated.
+
 # v7.2.1 - 2023-08-18
 
 Fixed
