@@ -54,8 +54,8 @@ resource "azuread_application" "aad_app" {
 }
 
 resource "azuread_service_principal" "sp" {
-  application_id = azuread_application.aad_app.application_id
-  owners         = var.sp_owners
+  client_id = azuread_application.aad_app.client_id
+  owners    = var.sp_owners
 
   app_role_assignment_required = false
 }
