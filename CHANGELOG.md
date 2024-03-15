@@ -1,4 +1,4 @@
-# Unreleased
+# v7.3.1 - 2024-03-15
 
 Fixed
  * [GH-1](https://github.com/claranet/terraform-azurerm-service-principal/pull/1): fix also `azuread_service_principal` resource with `client_id` attribute instead of deprecated `application_id`
