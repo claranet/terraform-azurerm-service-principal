@@ -33,3 +33,8 @@ output "sp_aad_groups" {
   description = "Azure Service Principal AAD groups membership."
   value       = var.sp_groups_member
 }
+
+output "sp_required_resource_access" {
+  description = "Azure Service Principal required resource access."
+  value       = azuread_application.aad_app.required_resource_access
+}
