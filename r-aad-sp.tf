@@ -9,10 +9,13 @@ resource "azuread_application" "aad_app" {
   dynamic "required_resource_access" {
     for_each = var.sp_required_resource_access
     content {
-      resource_app_id = required_resource_access.value.resource_app_id
-      resource_access {
-        id   = required_resource_access.value.resource_access_id
-        type = required_resource_access.value.resource_access_type
+      resource_app_id = required_resource_access.key
+      dynamic "resource_access" {
+        for_each = required_resource_access.value
+        content {
+          id   = resource_access.value.resource_access_id
+          type = resource_access.value.resource_access_type
+        }
       }
     }
   }
