@@ -1,3 +1,33 @@
+## 7.4.0 (2024-05-17)
+
+
+### Features
+
+* **AZ-1407:** change `sp_required_resource_access` variable type to fix the possibility to add several API permissions on the same API eb5abf6
+
+
+### Continuous Integration
+
+* **AZ-1391:** enable semantic-release [skip ci] 5a2888f
+* **AZ-1391:** update semantic-release config [skip ci] 807e533
+
+
+### Miscellaneous Chores
+
+* **deps:** enable automerge on renovate ebd62c0
+* **deps:** update dependency opentofu to v1.7.0 72ddc19
+* **deps:** update dependency opentofu to v1.7.1 aae3879
+* **deps:** update dependency pre-commit to v3.7.1 e10f740
+* **deps:** update dependency tflint to v0.51.0 111eeb0
+* **deps:** update dependency tflint to v0.51.1 d15fa01
+* **deps:** update dependency trivy to v0.50.2 823fdc6
+* **deps:** update dependency trivy to v0.50.4 cc0b478
+* **deps:** update dependency trivy to v0.51.0 99d4ea8
+* **deps:** update dependency trivy to v0.51.1 299c84a
+* **deps:** update renovate.json 699b95e
+* **pre-commit:** update commitlint hook 21321c9
+* **release:** remove legacy `VERSION` file 5b2be77
+
 # v7.3.1 - 2024-03-15
 
 Fixed
