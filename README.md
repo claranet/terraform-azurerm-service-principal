@@ -113,7 +113,7 @@ module "sp" {
 
 | Name | Version |
 |------|---------|
-| azuread | ~> 2.44 |
+| azuread | ~> 3.0 |
 | azurerm | ~> 3.0 |
 | random | ~> 3.5 |
 
