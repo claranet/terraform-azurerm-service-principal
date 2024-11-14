@@ -1,40 +1,50 @@
-output "sp_name" {
+output "resource" {
+  description = "Azure Service Principal resource object."
+  value       = azuread_service_principal.main
+}
+
+output "id" {
+  description = "Azure Service Principal ID."
+  value       = azuread_application.main.id
+}
+
+output "name" {
   description = "Azure Service Principal name."
-  value       = azuread_application.aad_app.display_name
+  value       = azuread_application.main.display_name
 }
 
-output "sp_app_id" {
+output "app_id" {
   description = "Azure Service Principal App ID."
-  value       = azuread_application.aad_app.client_id
+  value       = azuread_application.main.client_id
 }
 
-output "sp_object_id" {
+output "object_id" {
   description = "Azure Service Principal Object ID."
-  value       = azuread_service_principal.sp.object_id
+  value       = azuread_service_principal.main.object_id
 }
 
-output "sp_secret_key" {
+output "secret_key" {
   description = "Azure Service Principal secret key/password."
-  value       = azuread_service_principal_password.sp_pwd.value
+  value       = azuread_service_principal_password.main.value
   sensitive   = true
 }
 
-output "sp_validity_end_date" {
+output "validity_end_date" {
   description = "Azure Service Principal validity date."
-  value       = azuread_service_principal_password.sp_pwd.end_date
+  value       = azuread_service_principal_password.main.end_date
 }
 
-output "sp_role_scope_assignment" {
+output "role_scope_assignment" {
   description = "Azure Service Principal assigned roles and scopes."
-  value       = { for r in var.sp_scope_assignment : format("%s-%s", r.scope, coalesce(r.role_id, r.role_name)) => r }
+  value       = { for r in var.scope_assignment : format("%s-%s", r.scope, coalesce(r.role_id, r.role_name)) => r }
 }
 
-output "sp_aad_groups" {
-  description = "Azure Service Principal AAD groups membership."
-  value       = var.sp_groups_member
+output "entra_groups" {
+  description = "Azure Service Principal Entra ID groups membership."
+  value       = var.groups_member
 }
 
-output "sp_required_resource_access" {
+output "required_resource_access" {
   description = "Azure Service Principal required resource access."
-  value       = azuread_application.aad_app.required_resource_access
+  value       = azuread_application.main.required_resource_access
 }

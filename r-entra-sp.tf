@@ -1,13 +1,13 @@
-resource "azuread_application" "aad_app" {
-  display_name = var.sp_display_name
-  owners       = var.sp_owners
-  tags         = var.sp_aad_app_tags
+resource "azuread_application" "main" {
+  display_name = var.display_name
+  owners       = var.owners
+  tags         = var.entra_app_tags
 
   prevent_duplicate_names = true
   identifier_uris         = var.identifier_uris
 
   dynamic "required_resource_access" {
-    for_each = var.sp_required_resource_access
+    for_each = var.required_resource_access
     content {
       resource_app_id = required_resource_access.key
       dynamic "resource_access" {
@@ -56,16 +56,31 @@ resource "azuread_application" "aad_app" {
   }
 }
 
-resource "azuread_service_principal" "sp" {
-  client_id = azuread_application.aad_app.client_id
-  owners    = var.sp_owners
+moved {
+  from = azuread_application.aad_app
+  to   = azuread_application.main
+}
+
+resource "azuread_service_principal" "main" {
+  client_id = azuread_application.main.client_id
+  owners    = var.owners
 
   app_role_assignment_required = false
 }
 
-resource "azuread_service_principal_password" "sp_pwd" {
-  service_principal_id = azuread_service_principal.sp.id
-  end_date_relative    = var.sp_token_validity_duration
+moved {
+  from = azuread_service_principal.sp
+  to   = azuread_service_principal.main
+}
+
+resource "azuread_service_principal_password" "main" {
+  service_principal_id = azuread_service_principal.main.id
+  end_date_relative    = var.token_validity_duration
+}
+
+moved {
+  from = azuread_service_principal_password.sp_pwd
+  to   = azuread_service_principal_password.main
 }
 
 resource "random_uuid" "api_settings" {
