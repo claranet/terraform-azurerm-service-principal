@@ -34,62 +34,33 @@ More details about variables set by the `terraform-wrapper` available in the [do
 [Hashicorp Terraform](https://github.com/hashicorp/terraform/). Instead, we recommend to use [OpenTofu](https://github.com/opentofu/opentofu/).
 
 ```hcl
-data "azurerm_subscription" "primary" {
-}
-
-data "azurerm_resource_group" "rg" {
-  name = "dsrg_test"
-}
-
-data "azuread_group" "readers" {
-  display_name = "Claranet Readers"
-}
-
-data "azuread_users" "owner_users" {
-  user_principal_names = ["jean.dupont@xxxx.clara.net", "owner.yyyy@contoso.com"]
-}
-
-resource "azurerm_role_definition" "example" {
-  name  = "my-custom-role-definition"
-  scope = data.azurerm_subscription.primary.id
-
-  permissions {
-    actions     = ["Microsoft.Resources/subscriptions/resourceGroups/read"]
-    not_actions = []
-  }
-
-  assignable_scopes = [
-    data.azurerm_subscription.primary.id,
-  ]
-}
-
 module "sp" {
   source  = "claranet/service-principal/azurerm"
   version = "x.x.x"
 
-  sp_display_name = "claranet-tools"
-  sp_owners       = data.azuread_users.owner_users.object_ids
+  display_name = "claranet-tools"
+  owners       = data.azuread_users.owners.object_ids
 
-  sp_scope_assignment = [
+  scope_assignment = [
     {
-      scope     = data.azurerm_subscription.primary.id
+      scope     = data.azurerm_subscription.main.id
       role_name = null
       role_id   = azurerm_role_definition.example.role_definition_resource_id
     },
     {
-      scope     = data.azurerm_resource_group.rg.id
+      scope     = data.azurerm_resource_group.main.id
       role_name = "Contributor"
     }
   ]
 
-  sp_groups_member = {
+  groups_member = {
     (data.azuread_group.readers.display_name) = data.azuread_group.readers.object_id
   }
 
-  sp_aad_app_tags = ["foo", "bar"]
+  entra_app_tags = ["foo", "bar"]
 
   # az ad sp list --display-name "Microsoft Graph" --query '[].{appDisplayName:appDisplayName, appId:appId}'
-  sp_required_resource_access = {
+  required_resource_access = {
     # Azure Healthcare APIs
     "4f6778d8-5aef-43dc-a1ff-b073724b9495" = [{
       resource_access_id   = "4f6778d8-5aef-43dc-a1ff-b073724b9495" # user_impersonation - Application
@@ -114,7 +85,7 @@ module "sp" {
 | Name | Version |
 |------|---------|
 | azuread | ~> 3.0 |
-| azurerm | ~> 3.0 |
+| azurerm | ~> 4.0 |
 | random | ~> 3.5 |
 
 ## Modules
@@ -125,11 +96,11 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azuread_application.aad_app](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
-| [azuread_group_member.sp_group_member](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group_member) | resource |
-| [azuread_service_principal.sp](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) | resource |
-| [azuread_service_principal_password.sp_pwd](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_password) | resource |
-| [azurerm_role_assignment.sp_role](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azuread_application.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
+| [azuread_group_member.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group_member) | resource |
+| [azuread_service_principal.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) | resource |
+| [azuread_service_principal_password.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_password) | resource |
+| [azurerm_role_assignment.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [random_uuid.api_settings](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
 
 ## Inputs
@@ -137,26 +108,28 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | api\_settings | Settings for the APIs you need to define using this Service Principal. | <pre>object({<br/>    known_client_applications      = optional(list(string), [])<br/>    mapped_claims_enabled          = optional(bool, false)<br/>    requested_access_token_version = optional(number, 1)<br/>    oauth2_permission_scopes = optional(list(object({<br/>      admin_consent_description  = string<br/>      admin_consent_display_name = string<br/>      enabled                    = optional(bool, true)<br/>      id                         = optional(string)<br/>      type                       = optional(string, "User")<br/>      user_consent_description   = optional(string)<br/>      user_consent_display_name  = optional(string)<br/>      value                      = optional(string)<br/>    })), [])<br/>  })</pre> | `{}` | no |
+| display\_name | Azure Service Principal (and AAD application) display name. | `string` | n/a | yes |
+| entra\_app\_tags | A set of tags to apply to the application. Tag values also propagate to any linked service principals. | `list(string)` | `[]` | no |
+| groups\_member | Map of Entra ID Groups (group name => object ID) to add this Service Principal. | `map(string)` | `{}` | no |
 | identifier\_uris | A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant. | `list(string)` | `[]` | no |
-| sp\_aad\_app\_tags | A set of tags to apply to the application. Tag values also propagate to any linked service principals. | `list(string)` | `[]` | no |
-| sp\_display\_name | Azure Service Principal (and AAD application) display name. | `string` | n/a | yes |
-| sp\_groups\_member | Map of AAD Groups (group name => object ID) to add this Service Principal. | `map(string)` | `{}` | no |
-| sp\_owners | A set of object IDs of principals that will be granted ownership of both the AAD Application and associated Service Principal. Supported object types are users or service principals. | `list(string)` | `[]` | no |
-| sp\_required\_resource\_access | List of Service Principal Application OAuth permission scopes configuration. https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application#resource_access | <pre>map(list(object({<br/>    resource_access_id   = string<br/>    resource_access_type = string<br/>  })))</pre> | `{}` | no |
-| sp\_scope\_assignment | List of object representing the scopes and roles to assign the Service Principal with. | <pre>list(object({<br/>    scope     = string<br/>    role_name = optional(string)<br/>    role_id   = optional(string)<br/><br/>    delegated_managed_identity_resource_id = optional(string)<br/>    skip_service_principal_aad_check       = optional(bool, false)<br/>  }))</pre> | `[]` | no |
-| sp\_token\_validity\_duration | Azure Service Principal token/password duration before it expires. Defaults to 2 years. Notation documentation: https://pkg.go.dev/time#ParseDuration | `string` | `"17520h"` | no |
+| owners | A set of object IDs of principals that will be granted ownership of both the Entra ID Application and associated Service Principal. Supported object types are users or service principals. | `list(string)` | `[]` | no |
+| required\_resource\_access | List of Service Principal Application OAuth permission scopes configuration. See [documentation](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application#resource_access). | <pre>map(list(object({<br/>    resource_access_id   = string<br/>    resource_access_type = string<br/>  })))</pre> | `{}` | no |
+| scope\_assignment | List of object representing the scopes and roles to assign the Service Principal with. | <pre>list(object({<br/>    scope     = string<br/>    role_name = optional(string)<br/>    role_id   = optional(string)<br/><br/>    delegated_managed_identity_resource_id = optional(string)<br/>    skip_service_principal_aad_check       = optional(bool, false)<br/>  }))</pre> | `[]` | no |
+| token\_validity\_duration | Azure Service Principal token/password duration before it expires. Defaults to 2 years. See [documentation](https://pkg.go.dev/time#ParseDuration). | `string` | `"17520h"` | no |
 | web\_settings | Configuration for web related settings for this Service Principal. | <pre>object({<br/>    homepage_url                  = optional(string, null)<br/>    logout_url                    = optional(string, null)<br/>    redirect_uris                 = optional(list(string), [])<br/>    access_token_issuance_enabled = optional(bool)<br/>    id_token_issuance_enabled     = optional(bool)<br/>  })</pre> | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| sp\_aad\_groups | Azure Service Principal AAD groups membership. |
-| sp\_app\_id | Azure Service Principal App ID. |
-| sp\_name | Azure Service Principal name. |
-| sp\_object\_id | Azure Service Principal Object ID. |
-| sp\_required\_resource\_access | Azure Service Principal required resource access. |
-| sp\_role\_scope\_assignment | Azure Service Principal assigned roles and scopes. |
-| sp\_secret\_key | Azure Service Principal secret key/password. |
-| sp\_validity\_end\_date | Azure Service Principal validity date. |
+| app\_id | Azure Service Principal App ID. |
+| entra\_groups | Azure Service Principal Entra ID groups membership. |
+| id | Azure Service Principal ID. |
+| name | Azure Service Principal name. |
+| object\_id | Azure Service Principal Object ID. |
+| required\_resource\_access | Azure Service Principal required resource access. |
+| resource | Azure Service Principal resource object. |
+| role\_scope\_assignment | Azure Service Principal assigned roles and scopes. |
+| secret\_key | Azure Service Principal secret key/password. |
+| validity\_end\_date | Azure Service Principal validity date. |
 <!-- END_TF_DOCS -->
