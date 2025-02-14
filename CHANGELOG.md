@@ -1,3 +1,27 @@
+## 8.1.0 (2025-02-14)
+
+### Features
+
+* **AZ-1506:** add single_page_application block 2bf0973
+
+### Miscellaneous Chores
+
+* apply suggestion 62c1d06
+* **deps:** update dependency opentofu to v1.8.6 dbc2e6e
+* **deps:** update dependency opentofu to v1.8.8 d809df0
+* **deps:** update dependency opentofu to v1.9.0 66a8b9f
+* **deps:** update dependency pre-commit to v4.1.0 7ad2b6c
+* **deps:** update dependency tflint to v0.55.0 589c31b
+* **deps:** update dependency trivy to v0.58.1 b07fafe
+* **deps:** update dependency trivy to v0.58.2 1695ac3
+* **deps:** update dependency trivy to v0.59.1 9b396fb
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.19.0 479a44c
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.20.0 343a0b5
+* **deps:** update tools 6febf87
+* **deps:** update tools dd66fe9
+* update Github templates 46ca25b
+* update tflint config for v0.55.0 fd0dbc9
+
 ## 8.0.0 (2024-11-22)
 
 ### ⚠ BREAKING CHANGES
