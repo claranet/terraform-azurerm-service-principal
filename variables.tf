@@ -94,6 +94,5 @@ variable "single_page_application_settings" {
   type = object({
     redirect_uris = optional(list(string), [])
   })
-  default  = {}
-  nullable = false
+  default = null
 }
