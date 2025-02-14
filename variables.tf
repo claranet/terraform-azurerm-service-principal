@@ -88,3 +88,11 @@ variable "web_settings" {
   default  = {}
   nullable = false
 }
+
+variable "single_page_application_settings" {
+  description = "Configuration for single page application related settings for this Service Principal."
+  type = object({
+    redirect_uris = optional(list(string), [])
+  })
+  default = null
+}

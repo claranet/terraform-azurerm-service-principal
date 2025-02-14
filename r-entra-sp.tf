@@ -54,6 +54,13 @@ resource "azuread_application" "main" {
       }
     }
   }
+
+  dynamic "single_page_application" {
+    for_each = var.single_page_application_settings[*]
+    content {
+      redirect_uris = single_page_application.value.redirect_uris
+    }
+  }
 }
 
 moved {
