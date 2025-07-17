@@ -87,6 +87,7 @@ module "sp" {
 | azuread | ~> 3.0 |
 | azurerm | ~> 4.0 |
 | random | ~> 3.5 |
+| time | ~> 0.13.1 |
 
 ## Modules
 
@@ -102,6 +103,7 @@ No modules.
 | [azuread_service_principal_password.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_password) | resource |
 | [azurerm_role_assignment.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [random_uuid.api_settings](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) | resource |
+| [time_static.main](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/static) | resource |
 
 ## Inputs
 
@@ -118,6 +120,7 @@ No modules.
 | single\_page\_application\_settings | Configuration for single page application related settings for this Service Principal. | <pre>object({<br/>    redirect_uris = optional(list(string), [])<br/>  })</pre> | `null` | no |
 | token\_display\_name | A display name for the Service Principal's password. | `string` | `"Terraform managed secret"` | no |
 | token\_validity\_duration | Azure Service Principal token/password duration before it expires. Defaults to 2 years. See [documentation](https://pkg.go.dev/time#ParseDuration). | `string` | `"17520h"` | no |
+| token\_validity\_end\_date | Azure Service Principal token/password end date. This property cannot be used alongside `token_validity_duration`. | `string` | `null` | no |
 | web\_settings | Configuration for web related settings for this Service Principal. | <pre>object({<br/>    homepage_url                  = optional(string, null)<br/>    logout_url                    = optional(string, null)<br/>    redirect_uris                 = optional(list(string), [])<br/>    access_token_issuance_enabled = optional(bool)<br/>    id_token_issuance_enabled     = optional(bool)<br/>  })</pre> | `{}` | no |
 
 ## Outputs
