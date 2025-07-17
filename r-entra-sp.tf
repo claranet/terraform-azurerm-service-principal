@@ -81,6 +81,7 @@ moved {
 }
 
 resource "azuread_service_principal_password" "main" {
+  display_name         = var.token_display_name
   service_principal_id = azuread_service_principal.main.id
   end_date_relative    = var.token_validity_duration
 }
