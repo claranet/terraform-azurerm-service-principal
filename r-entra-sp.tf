@@ -89,7 +89,7 @@ resource "azuread_service_principal_password" "main" {
     ignore_changes = [end_date_relative]
     precondition {
       condition     = var.token_validity_duration != null || var.token_validity_end_date != null
-      error_message = "Either 'token_validity_duration' or 'token_validity_end_date' must be set. Force `token_validity_duration` to null if you want to use `token_validity_end_date`."
+      error_message = "Either 'token_validity_duration' or 'token_validity_end_date' must be set."
     }
   }
 }
