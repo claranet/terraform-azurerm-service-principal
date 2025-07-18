@@ -1,3 +1,39 @@
+## 8.2.0 (2025-07-18)
+
+### Features
+
+* **AZ-1588:** ✨ Add `token_display_name` variable for Service Principal password 0969994
+
+### Bug Fixes
+
+* **AZ-1589:** 🐛 fix `ignored end_date_relative` in provider 1355b5e
+
+### Miscellaneous Chores
+
+* **⚙️:** ✏️ update template identifier for MR review 16212b0
+* 🗑️ remove old commitlint configuration files 318efe2
+* **AZ-1588:** apply suggestion c92234e
+* **deps:** update dependency opentofu to v1.10.0 1a4995d
+* **deps:** update dependency opentofu to v1.10.1 a5577cb
+* **deps:** update dependency opentofu to v1.10.3 a113a75
+* **deps:** update dependency opentofu to v1.9.1 9de5a64
+* **deps:** update dependency pre-commit to v4.2.0 e90ab02
+* **deps:** update dependency terraform-docs to v0.20.0 2bd8928
+* **deps:** update dependency tflint to v0.57.0 ac7cf7c
+* **deps:** update dependency tflint to v0.58.0 73d0f92
+* **deps:** update dependency tflint to v0.58.1 db8b939
+* **deps:** update dependency trivy to v0.60.0 0542ffe
+* **deps:** update dependency trivy to v0.61.1 911ec09
+* **deps:** update dependency trivy to v0.62.0 5e1c1ab
+* **deps:** update dependency trivy to v0.62.1 cd9566c
+* **deps:** update dependency trivy to v0.63.0 4c13bf9
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.21.0 848dab4
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.22.0 8720e86
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.0 c3a2d1b
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.1 185f125
+* **deps:** update tools 3d16196
+* **deps:** update tools e4f0c41
+
 ## 8.1.0 (2025-02-14)
 
 ### Features
