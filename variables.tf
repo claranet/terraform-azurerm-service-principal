@@ -96,3 +96,10 @@ variable "single_page_application_settings" {
   })
   default = null
 }
+
+
+variable "token_validity_end_date" {
+  description = "Azure Service Principal token/password end date. This property cannot be used alongside `token_validity_duration`."
+  type        = string
+  default     = null
+}

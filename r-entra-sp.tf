@@ -81,8 +81,17 @@ moved {
 }
 
 resource "azuread_service_principal_password" "main" {
+  display_name         = var.token_display_name
   service_principal_id = azuread_service_principal.main.id
-  end_date_relative    = var.token_validity_duration
+  # end_date_relative    = var.token_validity_duration
+  end_date = var.token_validity_end_date != null ? var.token_validity_end_date : timeadd(time_static.main.rfc3339, var.token_validity_duration)
+  lifecycle {
+    ignore_changes = [end_date_relative]
+    precondition {
+      condition     = var.token_validity_duration != null || var.token_validity_end_date != null
+      error_message = "Either 'token_validity_duration' or 'token_validity_end_date' must be set."
+    }
+  }
 }
 
 moved {
@@ -93,3 +102,5 @@ moved {
 resource "random_uuid" "api_settings" {
   for_each = toset(try([for api in var.api_settings.oauth2_permission_scopes : api.admin_consent_display_name], []))
 }
+
+resource "time_static" "main" {}
