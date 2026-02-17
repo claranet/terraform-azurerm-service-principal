@@ -24,14 +24,14 @@ output "object_id" {
 }
 
 output "secret_key" {
-  description = "Azure Service Principal secret key/password."
-  value       = azuread_service_principal_password.main.value
+  description = "Azure App Registration or Service Principal secret key/password."
+  value       = try(azuread_service_principal_password.main.value, azuread_application_password.main.value)
   sensitive   = true
 }
 
 output "validity_end_date" {
-  description = "Azure Service Principal validity date."
-  value       = azuread_service_principal_password.main.end_date
+  description = "Azure App Registration or Service Principal validity date."
+  value       = try(azuread_service_principal_password.main.end_date, azuread_application_password.main.end_date)
 }
 
 output "role_scope_assignment" {

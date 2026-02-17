@@ -5,6 +5,7 @@ resource "azuread_application" "main" {
 
   prevent_duplicate_names = true
   identifier_uris         = var.identifier_uris
+  sign_in_audience        = var.sign_in_audience
 
   dynamic "required_resource_access" {
     for_each = var.required_resource_access
@@ -68,6 +69,23 @@ moved {
   to   = azuread_application.main
 }
 
+resource "azuread_application_password" "main" {
+  display_name   = var.token_display_name
+  application_id = azuread_application.main.id
+  end_date       = var.token_validity_end_date != null ? var.token_validity_end_date : timeadd(time_static.main.rfc3339, var.token_validity_duration)
+
+  lifecycle {
+    enabled = var.is_application_token
+    ignore_changes = [
+      end_date_relative,
+    ]
+    precondition {
+      condition     = var.token_validity_duration != null || var.token_validity_end_date != null
+      error_message = "Either 'token_validity_duration' or 'token_validity_end_date' must be set."
+    }
+  }
+}
+
 resource "azuread_service_principal" "main" {
   client_id = azuread_application.main.client_id
   owners    = var.owners
@@ -83,10 +101,13 @@ moved {
 resource "azuread_service_principal_password" "main" {
   display_name         = var.token_display_name
   service_principal_id = azuread_service_principal.main.id
-  # end_date_relative    = var.token_validity_duration
-  end_date = var.token_validity_end_date != null ? var.token_validity_end_date : timeadd(time_static.main.rfc3339, var.token_validity_duration)
+  end_date             = var.token_validity_end_date != null ? var.token_validity_end_date : timeadd(time_static.main.rfc3339, var.token_validity_duration)
+
   lifecycle {
-    ignore_changes = [end_date_relative]
+    enabled = !var.is_application_token
+    ignore_changes = [
+      end_date_relative,
+    ]
     precondition {
       condition     = var.token_validity_duration != null || var.token_validity_end_date != null
       error_message = "Either 'token_validity_duration' or 'token_validity_end_date' must be set."

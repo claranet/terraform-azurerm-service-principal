@@ -11,7 +11,7 @@ variable "owners" {
 }
 
 variable "token_validity_duration" {
-  description = "Azure Service Principal token/password duration before it expires. Defaults to 2 years. See [documentation](https://pkg.go.dev/time#ParseDuration)."
+  description = "Azure App Registration or Service Principal token/password duration before it expires. Defaults to 2 years. See [documentation](https://pkg.go.dev/time#ParseDuration)."
   type        = string
   default     = "${24 * 365 * 2}h" # 2 years
 }
@@ -20,6 +20,13 @@ variable "identifier_uris" {
   description = "A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant."
   type        = list(string)
   default     = []
+}
+
+variable "sign_in_audience" {
+  description = "The Microsoft identity platform accounts that are supported by the application. Possible values are: `AzureADMyOrg` (default), `AzureADMultipleOrgs`, `AzureADandPersonalMicrosoftAccount`, and `PersonalMicrosoftAccount`."
+  type        = string
+  default     = "AzureADMyOrg"
+  nullable    = false
 }
 
 variable "scope_assignment" {
@@ -97,9 +104,15 @@ variable "single_page_application_settings" {
   default = null
 }
 
-
 variable "token_validity_end_date" {
-  description = "Azure Service Principal token/password end date. This property cannot be used alongside `token_validity_duration`."
+  description = "Azure App Registration or Service Principal token/password end date. This property cannot be used alongside `token_validity_duration`."
   type        = string
   default     = null
+}
+
+variable "is_application_token" {
+  description = "Indicates whether the generated token is for the App Registration. Useful for multi-tenant scenarios. Defaults to `false`."
+  type        = bool
+  default     = false
+  nullable    = false
 }
