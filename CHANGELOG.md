@@ -1,3 +1,9 @@
+## 8.3.0 (2026-02-18)
+
+### Features
+
+* ✨ add multi-tenant capabilities 33a57b9
+
 ## 8.2.1 (2026-02-13)
 
 ### Code Refactoring
