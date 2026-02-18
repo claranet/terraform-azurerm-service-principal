@@ -98,6 +98,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [azuread_application.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
+| [azuread_application_password.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_password) | resource |
 | [azuread_group_member.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group_member) | resource |
 | [azuread_service_principal.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) | resource |
 | [azuread_service_principal_password.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_password) | resource |
@@ -114,13 +115,15 @@ No modules.
 | entra\_app\_tags | A set of tags to apply to the application. Tag values also propagate to any linked service principals. | `list(string)` | `[]` | no |
 | groups\_member | Map of Entra ID Groups (group name => object ID) to add this Service Principal. | `map(string)` | `{}` | no |
 | identifier\_uris | A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant. | `list(string)` | `[]` | no |
+| is\_application\_token | Indicates whether the generated token is for the App Registration. Useful for multi-tenant scenarios. Defaults to `false`. | `bool` | `false` | no |
 | owners | A set of object IDs of principals that will be granted ownership of both the Entra ID Application and associated Service Principal. Supported object types are users or service principals. | `list(string)` | `[]` | no |
 | required\_resource\_access | List of Service Principal Application OAuth permission scopes configuration. See [documentation](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application#resource_access). | <pre>map(list(object({<br/>    resource_access_id   = string<br/>    resource_access_type = string<br/>  })))</pre> | `{}` | no |
 | scope\_assignment | List of object representing the scopes and roles to assign the Service Principal with. | <pre>list(object({<br/>    scope     = string<br/>    role_name = optional(string)<br/>    role_id   = optional(string)<br/><br/>    delegated_managed_identity_resource_id = optional(string)<br/>    skip_service_principal_aad_check       = optional(bool, false)<br/>  }))</pre> | `[]` | no |
+| sign\_in\_audience | The Microsoft identity platform accounts that are supported by the application. Possible values are: `AzureADMyOrg` (default), `AzureADMultipleOrgs`, `AzureADandPersonalMicrosoftAccount`, and `PersonalMicrosoftAccount`. | `string` | `"AzureADMyOrg"` | no |
 | single\_page\_application\_settings | Configuration for single page application related settings for this Service Principal. | <pre>object({<br/>    redirect_uris = optional(list(string), [])<br/>  })</pre> | `null` | no |
 | token\_display\_name | A display name for the Service Principal's password. | `string` | `"Terraform managed secret"` | no |
-| token\_validity\_duration | Azure Service Principal token/password duration before it expires. Defaults to 2 years. See [documentation](https://pkg.go.dev/time#ParseDuration). | `string` | `"17520h"` | no |
-| token\_validity\_end\_date | Azure Service Principal token/password end date. This property cannot be used alongside `token_validity_duration`. | `string` | `null` | no |
+| token\_validity\_duration | Azure App Registration or Service Principal token/password duration before it expires. Defaults to 2 years. See [documentation](https://pkg.go.dev/time#ParseDuration). | `string` | `"17520h"` | no |
+| token\_validity\_end\_date | Azure App Registration or Service Principal token/password end date. This property cannot be used alongside `token_validity_duration`. | `string` | `null` | no |
 | web\_settings | Configuration for web related settings for this Service Principal. | <pre>object({<br/>    homepage_url                  = optional(string, null)<br/>    logout_url                    = optional(string, null)<br/>    redirect_uris                 = optional(list(string), [])<br/>    access_token_issuance_enabled = optional(bool)<br/>    id_token_issuance_enabled     = optional(bool)<br/>  })</pre> | `{}` | no |
 
 ## Outputs
@@ -135,6 +138,6 @@ No modules.
 | required\_resource\_access | Azure Service Principal required resource access. |
 | resource | Azure Service Principal resource object. |
 | role\_scope\_assignment | Azure Service Principal assigned roles and scopes. |
-| secret\_key | Azure Service Principal secret key/password. |
-| validity\_end\_date | Azure Service Principal validity date. |
+| secret\_key | Azure App Registration or Service Principal secret key/password. |
+| validity\_end\_date | Azure App Registration or Service Principal validity date. |
 <!-- END_TF_DOCS -->
