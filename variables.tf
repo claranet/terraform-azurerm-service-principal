@@ -116,3 +116,9 @@ variable "is_application_token" {
   default     = false
   nullable    = false
 }
+
+variable "description" {
+  description = "Description of the Application to be displayed in the Azure portal."
+  type        = string
+  default     = null
+}
