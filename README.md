@@ -83,7 +83,7 @@ module "sp" {
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azuread | ~> 3.0 |
 | azurerm | ~> 4.31 |
 | random | ~> 3.5 |
@@ -96,7 +96,7 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azuread_application.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
 | [azuread_application_password.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_password) | resource |
 | [azuread_group_member.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group_member) | resource |
@@ -109,7 +109,7 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | api\_settings | Settings for the APIs you need to define using this Service Principal. | <pre>object({<br/>    known_client_applications      = optional(list(string), [])<br/>    mapped_claims_enabled          = optional(bool, false)<br/>    requested_access_token_version = optional(number, 1)<br/>    oauth2_permission_scopes = optional(list(object({<br/>      admin_consent_description  = string<br/>      admin_consent_display_name = string<br/>      enabled                    = optional(bool, true)<br/>      id                         = optional(string)<br/>      type                       = optional(string, "User")<br/>      user_consent_description   = optional(string)<br/>      user_consent_display_name  = optional(string)<br/>      value                      = optional(string)<br/>    })), [])<br/>  })</pre> | `{}` | no |
 | description | Description of the Application to be displayed in the Azure portal. | `string` | `null` | no |
 | display\_name | Azure Service Principal (and AAD application) display name. | `string` | n/a | yes |
@@ -130,7 +130,7 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | app\_id | Azure Service Principal App ID. |
 | entra\_groups | Azure Service Principal Entra ID groups membership. |
 | id | Azure Service Principal ID. |
