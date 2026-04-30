@@ -1,5 +1,6 @@
 resource "azuread_application" "main" {
   display_name = var.display_name
+  description  = var.description
   owners       = var.owners
   tags         = var.entra_app_tags
 
