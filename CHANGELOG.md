@@ -1,3 +1,15 @@
+## 8.4.0 (2026-04-30)
+
+### Features
+
+* **variables:** ✨ add description variable to application 793397b
+
+### Miscellaneous Chores
+
+* **deps:** 🔗 update mise conf for OpenTofu d278c90
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.3.0 3043eec
+* **pre-commit:** 🔧 move to prek 9b66fb8
+
 ## 8.3.1 (2026-03-27)
 
 ### Bug Fixes
