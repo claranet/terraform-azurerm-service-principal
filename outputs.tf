@@ -1,6 +1,7 @@
 output "resource" {
   description = "Azure Service Principal resource object."
   value       = azuread_service_principal.main
+  sensitive   = true
 }
 
 output "id" {
