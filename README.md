@@ -77,6 +77,34 @@ module "sp" {
       }
     ]
   }
+
+  # Classic federated credentials — exact subject matching (GA)
+  # federated_identity_credentials = {
+  #   github-actions-main = {
+  #     display_name = "github-actions-main-branch"
+  #     issuer       = "https://token.actions.githubusercontent.com"
+  #     subject      = "repo:my-org/my-repo:ref:refs/heads/main"
+  #   }
+  #   gitlab-ci-main = {
+  #     display_name = "gitlab-ci-main-pipeline"
+  #     issuer       = "https://gitlab.com"
+  #     subject      = "project_path:my-group/my-project:ref_type:branch:ref:main"
+  #   }
+  #   kubernetes-default = {
+  #     display_name = "k8s-default-namespace"
+  #     issuer       = "https://oidc.eks.eu-west-1.amazonaws.com/id/EXAMPLE"
+  #     subject      = "system:serviceaccount:default:my-serviceaccount"
+  #   }
+  # }
+
+  # Flexible federated credentials — wildcard claims matching (preview)
+  # federated_identity_credentials = {
+  #   github-actions-any-branch = {
+  #     display_name               = "github-actions-any-branch"
+  #     issuer                     = "https://token.actions.githubusercontent.com"
+  #     claims_matching_expression = "claims['sub'] matches 'repo:my-org/my-repo:ref:refs/heads/*'"
+  #   }
+  # }
 }
 ```
 
@@ -98,6 +126,8 @@ No modules.
 | Name | Type |
 | ---- | ---- |
 | [azuread_application.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
+| [azuread_application_federated_identity_credential.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential) | resource |
+| [azuread_application_flexible_federated_identity_credential.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_flexible_federated_identity_credential) | resource |
 | [azuread_application_password.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_password) | resource |
 | [azuread_group_member.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group_member) | resource |
 | [azuread_service_principal.main](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal) | resource |
@@ -114,6 +144,7 @@ No modules.
 | description | Description of the Application to be displayed in the Azure portal. | `string` | `null` | no |
 | display\_name | Azure Service Principal (and AAD application) display name. | `string` | n/a | yes |
 | entra\_app\_tags | A set of tags to apply to the application. Tag values also propagate to any linked service principals. | `list(string)` | `[]` | no |
+| federated\_identity\_credentials | Map of federated identity credentials to create on the Entra ID Application. Keys are stable Terraform resource identifiers. Set `subject` for exact matching or `claims_matching_expression` for wildcard matching (preview). See [documentation](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential). | <pre>map(object({<br/>    display_name               = string<br/>    description                = optional(string, null)<br/>    issuer                     = string<br/>    subject                    = optional(string, null)<br/>    audiences                  = optional(list(string), ["api://AzureADTokenExchange"])<br/>    claims_matching_expression = optional(string, null)<br/>    audience                   = optional(string, "api://AzureADTokenExchange")<br/>  }))</pre> | `{}` | no |
 | groups\_member | Map of Entra ID Groups (group name => object ID) to add this Service Principal. | `map(string)` | `{}` | no |
 | identifier\_uris | A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant. | `list(string)` | `[]` | no |
 | is\_application\_token | Indicates whether the generated token is for the App Registration. Useful for multi-tenant scenarios. Defaults to `false`. | `bool` | `false` | no |
@@ -138,6 +169,8 @@ No modules.
 | object\_id | Azure Service Principal Object ID. |
 | required\_resource\_access | Azure Service Principal required resource access. |
 | resource | Azure Service Principal resource object. |
+| resource\_federated\_identity\_credentials | Azure Entra ID Application federated identity credential resource objects. |
+| resource\_flexible\_federated\_identity\_credentials | Azure Entra ID Application flexible federated identity credential resource objects (preview). |
 | role\_scope\_assignment | Azure Service Principal assigned roles and scopes. |
 | secret\_key | Azure App Registration or Service Principal secret key/password. |
 | validity\_end\_date | Azure App Registration or Service Principal validity date. |

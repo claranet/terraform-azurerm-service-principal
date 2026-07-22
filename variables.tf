@@ -122,3 +122,34 @@ variable "description" {
   type        = string
   default     = null
 }
+
+variable "federated_identity_credentials" {
+  description = "Map of federated identity credentials to create on the Entra ID Application. Keys are stable Terraform resource identifiers. Set `subject` for exact matching or `claims_matching_expression` for wildcard matching (preview). See [documentation](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_federated_identity_credential)."
+  type = map(object({
+    display_name               = string
+    description                = optional(string, null)
+    issuer                     = string
+    subject                    = optional(string, null)
+    audiences                  = optional(list(string), ["api://AzureADTokenExchange"])
+    claims_matching_expression = optional(string, null)
+    audience                   = optional(string, "api://AzureADTokenExchange")
+  }))
+  default  = {}
+  nullable = false
+
+  validation {
+    condition = alltrue([
+      for k, v in var.federated_identity_credentials :
+      (v.subject != null) != (v.claims_matching_expression != null)
+    ])
+    error_message = "Each credential must set exactly one of `subject` or `claims_matching_expression`."
+  }
+
+  validation {
+    condition = alltrue([
+      for k, v in var.federated_identity_credentials :
+      v.subject != null ? v.audiences != null : v.audience != null
+    ])
+    error_message = "`audiences` must be set with `subject`; `audience` must be set with `claims_matching_expression`."
+  }
+}

@@ -41,4 +41,32 @@ module "sp" {
       }
     ]
   }
+
+  # Classic federated credentials — exact subject matching (GA)
+  # federated_identity_credentials = {
+  #   github-actions-main = {
+  #     display_name = "github-actions-main-branch"
+  #     issuer       = "https://token.actions.githubusercontent.com"
+  #     subject      = "repo:my-org/my-repo:ref:refs/heads/main"
+  #   }
+  #   gitlab-ci-main = {
+  #     display_name = "gitlab-ci-main-pipeline"
+  #     issuer       = "https://gitlab.com"
+  #     subject      = "project_path:my-group/my-project:ref_type:branch:ref:main"
+  #   }
+  #   kubernetes-default = {
+  #     display_name = "k8s-default-namespace"
+  #     issuer       = "https://oidc.eks.eu-west-1.amazonaws.com/id/EXAMPLE"
+  #     subject      = "system:serviceaccount:default:my-serviceaccount"
+  #   }
+  # }
+
+  # Flexible federated credentials — wildcard claims matching (preview)
+  # federated_identity_credentials = {
+  #   github-actions-any-branch = {
+  #     display_name               = "github-actions-any-branch"
+  #     issuer                     = "https://token.actions.githubusercontent.com"
+  #     claims_matching_expression = "claims['sub'] matches 'repo:my-org/my-repo:ref:refs/heads/*'"
+  #   }
+  # }
 }
