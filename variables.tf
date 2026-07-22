@@ -132,7 +132,6 @@ variable "federated_identity_credentials" {
     subject                    = optional(string, null)
     audiences                  = optional(list(string), ["api://AzureADTokenExchange"])
     claims_matching_expression = optional(string, null)
-    audience                   = optional(string, "api://AzureADTokenExchange")
   }))
   default  = {}
   nullable = false

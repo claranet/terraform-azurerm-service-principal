@@ -17,5 +17,5 @@ resource "azuread_application_flexible_federated_identity_credential" "main" {
   description                = each.value.description
   issuer                     = each.value.issuer
   claims_matching_expression = each.value.claims_matching_expression
-  audience                   = each.value.audience
+  audience                   = one(each.value.audiences)
 }
