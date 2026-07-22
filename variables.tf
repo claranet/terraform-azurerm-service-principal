@@ -144,11 +144,4 @@ variable "federated_identity_credentials" {
     error_message = "Each credential must set exactly one of `subject` or `claims_matching_expression`."
   }
 
-  validation {
-    condition = alltrue([
-      for k, v in var.federated_identity_credentials :
-      v.subject != null ? v.audiences != null : v.audience != null
-    ])
-    error_message = "`audiences` must be set with `subject`; `audience` must be set with `claims_matching_expression`."
-  }
 }
