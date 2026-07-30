@@ -42,4 +42,12 @@ module "sp" {
     ]
   }
 
+  # Flexible federated credentials — wildcard claims matching (preview)
+  federated_identity_credentials = {
+    github-actions-any-branch = {
+      display_name               = "github-actions-any-branch"
+      issuer                     = "https://token.actions.githubusercontent.com"
+      claims_matching_expression = "claims['sub'] matches 'repo:my-org/my-repo:ref:refs/heads/*'"
+    }
+  }
 }
