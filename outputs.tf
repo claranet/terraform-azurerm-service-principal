@@ -49,3 +49,13 @@ output "required_resource_access" {
   description = "Azure Service Principal required resource access."
   value       = azuread_application.main.required_resource_access
 }
+
+output "resource_federated_identity_credentials" {
+  description = "Azure Entra ID Application federated identity credential resource objects."
+  value       = azuread_application_federated_identity_credential.main
+}
+
+output "resource_flexible_federated_identity_credentials" {
+  description = "Azure Entra ID Application flexible federated identity credential resource objects (preview)."
+  value       = azuread_application_flexible_federated_identity_credential.main
+}
