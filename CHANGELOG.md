@@ -1,3 +1,25 @@
+## 8.5.0 (2026-07-31)
+
+### Features
+
+* ✨ add federated identity credentials support 5639156
+
+### Bug Fixes
+
+* **AZ-1688:** 🐛 add validation for `claims_matching_expression` in federated identity credentials 4f3936c
+* **AZ-1688:** 🐛 remove audience validation for federated identity credentials 2e9c21c
+
+### Documentation
+
+* **AZ-1688:** 📚 add federated identity credentials and role definition examples 98f8fb4
+
+### Miscellaneous Chores
+
+* apply suggestions ca6e95b
+* **deps:** update dependency opentofu to v1.12.5 0c766f3
+* **deps:** update dependency tflint to v0.64.0 cc1ee65
+* **deps:** update dependency time to ~> 0.14.0 c4da0e6
+
 ## 8.4.2 (2026-07-20)
 
 ### Bug Fixes
