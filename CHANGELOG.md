@@ -1,3 +1,23 @@
+## 9.0.0 (2026-08-19)
+
+### ⚠ BREAKING CHANGES
+
+* **SREAA-368:** Minimum OpenTofu version raised to 1.12, AzureRM provider
+minimum version raised to 5.0. Terraform >= 1.3 still listed but unverified.
+
+### Features
+
+* **SREAA-368:** upgrade module to v9 (OpenTofu >= 1.12, AzureRM ~> 5.0) e75702b
+
+### Bug Fixes
+
+* **SREAA-368:** align v9 branch with current pipeline and provider constraints 713e50a
+
+### Miscellaneous Chores
+
+* **SREAA-368:** synchronize committed.toml and AGENTS.md from the ci template 252f987
+* **v9:** 🐛 synchronize common files and docs df9d1c2
+
 ## 8.5.0 (2026-07-31)
 
 ### Features
