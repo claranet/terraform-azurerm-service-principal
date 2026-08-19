@@ -87,7 +87,7 @@ module "sp" {
 | Name | Version |
 | ---- | ------- |
 | azuread | ~> 3.0 |
-| azurerm | ~> 4.31 |
+| azurerm | ~> 5.0 |
 | random | ~> 3.5 |
 | time | ~> 0.14.0 |
 
