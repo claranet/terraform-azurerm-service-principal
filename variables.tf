@@ -10,6 +10,13 @@ variable "owners" {
   default     = []
 }
 
+variable "token_enabled" {
+  description = "Whether to create a token/password (client secret) for the App Registration or the Service Principal. Set to `false` for a secretless identity, such as one that only authenticates with `federated_identity_credentials` (OIDC): the `token_*` and `is_application_token` variables are then ignored and the `secret_key` and `validity_end_date` outputs are `null`."
+  type        = bool
+  default     = true
+  nullable    = false
+}
+
 variable "token_validity_duration" {
   description = "Azure App Registration or Service Principal token/password duration before it expires. Defaults to 2 years. See [documentation](https://pkg.go.dev/time#ParseDuration)."
   type        = string

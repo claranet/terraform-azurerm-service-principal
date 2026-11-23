@@ -25,14 +25,14 @@ output "object_id" {
 }
 
 output "secret_key" {
-  description = "Azure App Registration or Service Principal secret key/password."
-  value       = try(azuread_service_principal_password.main.value, azuread_application_password.main.value)
+  description = "Azure App Registration or Service Principal secret key/password, `null` when `token_enabled` is `false`."
+  value       = try(azuread_service_principal_password.main.value, azuread_application_password.main.value, null)
   sensitive   = true
 }
 
 output "validity_end_date" {
-  description = "Azure App Registration or Service Principal validity date."
-  value       = try(azuread_service_principal_password.main.end_date, azuread_application_password.main.end_date)
+  description = "Azure App Registration or Service Principal validity date, `null` when `token_enabled` is `false`."
+  value       = try(azuread_service_principal_password.main.end_date, azuread_application_password.main.end_date, null)
 }
 
 output "role_scope_assignment" {

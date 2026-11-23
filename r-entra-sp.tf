@@ -76,7 +76,7 @@ resource "azuread_application_password" "main" {
   end_date       = var.token_validity_end_date != null ? var.token_validity_end_date : timeadd(time_static.main.rfc3339, var.token_validity_duration)
 
   lifecycle {
-    enabled = var.is_application_token
+    enabled = var.token_enabled && var.is_application_token
     ignore_changes = [
       end_date_relative,
     ]
@@ -105,7 +105,7 @@ resource "azuread_service_principal_password" "main" {
   end_date             = var.token_validity_end_date != null ? var.token_validity_end_date : timeadd(time_static.main.rfc3339, var.token_validity_duration)
 
   lifecycle {
-    enabled = !var.is_application_token
+    enabled = var.token_enabled && !var.is_application_token
     ignore_changes = [
       end_date_relative,
     ]
@@ -125,4 +125,8 @@ resource "random_uuid" "api_settings" {
   for_each = toset(try([for api in var.api_settings.oauth2_permission_scopes : api.admin_consent_display_name], []))
 }
 
-resource "time_static" "main" {}
+resource "time_static" "main" {
+  lifecycle {
+    enabled = var.token_enabled
+  }
+}
