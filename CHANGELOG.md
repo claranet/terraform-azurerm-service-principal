@@ -1,3 +1,25 @@
+## 9.1.0 (2026-11-25)
+
+### Features
+
+* **SREAA-322:** ✨ add `[secure]_enabled` to create a service principal without secret 0b30ace
+
+### Continuous Integration
+
+* **release:** drop semantic-release-slack-bot, the receiver posts releases ab7b7a6
+
+### Miscellaneous Chores
+
+* **deps:** ⬆️ update tools 🔗 63bb169
+* **deps:** update dependency opentofu to v1.13.0 69e3c12
+* **deps:** update dependency opentofu to v1.13.1 84acb0d
+* **deps:** update dependency opentofu to v1.13.2 3d2ce11
+* **deps:** update dependency opentofu to v1.13.9 46413c8
+* **deps:** update dependency terraform-docs to v0.25.1 85e9a8c
+* **deps:** update dependency tflint to v0.65.0 0860e39
+* **deps:** update dependency tflint to v0.66.0 ef57acf
+* **deps:** update pre-commit hook crate-ci/committed to v1.1.12 501167f
+
 ## 9.0.0 (2026-08-19)
 
 ### ⚠ BREAKING CHANGES
