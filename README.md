@@ -128,6 +128,7 @@ No modules.
 | sign\_in\_audience | The Microsoft identity platform accounts that are supported by the application. Possible values are: `AzureADMyOrg` (default), `AzureADMultipleOrgs`, `AzureADandPersonalMicrosoftAccount`, and `PersonalMicrosoftAccount`. | `string` | `"AzureADMyOrg"` | no |
 | single\_page\_application\_settings | Configuration for single page application related settings for this Service Principal. | <pre>object({<br/>    redirect_uris = optional(list(string), [])<br/>  })</pre> | `null` | no |
 | token\_display\_name | A display name for the Service Principal's password. | `string` | `"Terraform managed secret"` | no |
+| token\_enabled | Whether to create a token/password (client secret) for the App Registration or the Service Principal. Set to `false` for a secretless identity, such as one that only authenticates with `federated_identity_credentials` (OIDC): the `token_*` and `is_application_token` variables are then ignored and the `secret_key` and `validity_end_date` outputs are `null`. | `bool` | `true` | no |
 | token\_validity\_duration | Azure App Registration or Service Principal token/password duration before it expires. Defaults to 2 years. See [documentation](https://pkg.go.dev/time#ParseDuration). | `string` | `"17520h"` | no |
 | token\_validity\_end\_date | Azure App Registration or Service Principal token/password end date. This property cannot be used alongside `token_validity_duration`. | `string` | `null` | no |
 | web\_settings | Configuration for web related settings for this Service Principal. | <pre>object({<br/>    homepage_url                  = optional(string, null)<br/>    logout_url                    = optional(string, null)<br/>    redirect_uris                 = optional(list(string), [])<br/>    access_token_issuance_enabled = optional(bool)<br/>    id_token_issuance_enabled     = optional(bool)<br/>  })</pre> | `{}` | no |
@@ -146,6 +147,6 @@ No modules.
 | resource\_federated\_identity\_credentials | Azure Entra ID Application federated identity credential resource objects. |
 | resource\_flexible\_federated\_identity\_credentials | Azure Entra ID Application flexible federated identity credential resource objects (preview). |
 | role\_scope\_assignment | Azure Service Principal assigned roles and scopes. |
-| secret\_key | Azure App Registration or Service Principal secret key/password. |
-| validity\_end\_date | Azure App Registration or Service Principal validity date. |
+| secret\_key | Azure App Registration or Service Principal secret key/password, `null` when `token_enabled` is `false`. |
+| validity\_end\_date | Azure App Registration or Service Principal validity date, `null` when `token_enabled` is `false`. |
 <!-- END_TF_DOCS -->
